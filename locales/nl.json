@@ -1,0 +1,15 @@
+{
+  "pair": {
+    "instructions": "Login met je ControlMySpa account",
+    "username": "Email",
+    "password": "Wachtwoord",
+    "login": "Inloggen",
+    "error": "Er is iets mis gegaan. Controleer je login",
+    "error_empty": "Geen Spa gevonden."
+  },
+  "helpers": {
+    "days": "d",
+    "hours": "u",
+    "minutes": "m"
+  }
+}

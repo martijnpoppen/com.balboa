@@ -1,0 +1,390 @@
+{
+  "id": "com.balboa",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "brandColor": "#000000",
+  "name": {
+    "en": "ControlMySpa",
+    "nl": "ControlMySpa"
+  },
+  "description": {
+    "en": "Stay connected to your spa from anywhere",
+    "nl": "Blijf in verbinding met je spa"
+  },
+  "tags": {
+    "en": [
+      "spa",
+      "hot tub",
+      "jacuzzi",
+      "balboa",
+      "water",
+      "heating",
+      "bubbles",
+      "jet",
+      "blower",
+      "lights",
+      "temperature"
+    ]
+  },
+  "category": [
+    "security"
+  ],
+  "images": {
+    "large": "/assets/images/large.jpg",
+    "small": "/assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Martijn Poppen",
+    "email": "controlmyspa@martijnpoppen.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Martijn Poppen",
+        "email": "controlmyspa@martijnpoppen.nl"
+      }
+    ],
+    "translators": [
+      {
+        "name": "🇬🇧 Martijn Poppen"
+      },
+      {
+        "name": "🇳🇱 Martijn Poppen"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "martijnpoppen"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://community.athom.com/t/app-amberpro/50486"
+  },
+  "source": "https://github.com/martijnpoppen/com.balboa",
+  "homeyCommunityTopicId": 50486,
+  "support": "https://community.athom.com/t/app-amberpro/50486",
+  "drivers": [
+    {
+      "id": "Balboa",
+      "class": "other",
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "capabilities": [
+        "locked",
+        "target_temperature",
+        "measure_temperature",
+        "action_pump_state",
+        "action_light_state",
+        "action_blower_state",
+        "action_heater_mode"
+      ],
+      "capabilitiesOptions": {
+        "target_temperature": {
+          "min": 15.5,
+          "max": 40
+        },
+        "locked": {
+          "title": {
+            "nl": "Paneel slot",
+            "en": "Panel lock"
+          }
+        }
+      },
+      "name": {
+        "en": "Balboa",
+        "nl": "Balboa"
+      },
+      "images": {
+        "large": "drivers/Balboa/assets/images/large.jpg",
+        "small": "drivers/Balboa/assets/images/small.jpg"
+      },
+      "pair": [
+        {
+          "id": "login_controlmyspa"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "login_controlmyspa",
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "General settings",
+            "nl": "Algemene instellingen"
+          },
+          "children": [
+            {
+              "id": "update_interval",
+              "type": "number",
+              "label": {
+                "en": "Update interval",
+                "nl": "Update interval"
+              },
+              "min": 10,
+              "max": 3600,
+              "units": {
+                "en": "seconds",
+                "nl": "seconden"
+              },
+              "value": 600
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Login settings",
+            "nl": "Login instellingen"
+          },
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Login",
+                "nl": "Login"
+              },
+              "value": ""
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              },
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "flow": {
+    "actions": [
+      {
+        "id": "action_pump_state_flow",
+        "title": {
+          "en": "Set Pump",
+          "nl": "Zet Pomp"
+        },
+        "titleFormatted": {
+          "en": "Set Pump [[action_on_off]]",
+          "nl": "Zet Pomp [[action_on_off]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Selecteer apparaat"
+            },
+            "filter": "driver_id=Balboa&capabilities=action_pump_state"
+          },
+          {
+            "name": "action_on_off",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "action_light_state_flow",
+        "title": {
+          "en": "Set Light",
+          "nl": "Zet Lamp"
+        },
+        "titleFormatted": {
+          "en": "Set Light [[action_on_off]]",
+          "nl": "Zet Lamp [[action_on_off]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Selecteer apparaat"
+            },
+            "filter": "driver_id=Balboa&capabilities=action_light_state"
+          },
+          {
+            "name": "action_on_off",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "action_blower_state_flow",
+        "title": {
+          "en": "Set Blower",
+          "nl": "Zet Blower"
+        },
+        "titleFormatted": {
+          "en": "Set Blower [[action_on_off]]",
+          "nl": "Zet Blower [[action_on_off]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Selecteer apparaat"
+            },
+            "filter": "driver_id=Balboa&capabilities=action_blower_state"
+          },
+          {
+            "name": "action_on_off",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "action_heater_mode_flow",
+        "title": {
+          "en": "Toggle Heater",
+          "nl": "Wissel Blower"
+        },
+        "titleFormatted": {
+          "en": "Toggle Heater",
+          "nl": "Wissel Verwarming"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Selecteer apparaat"
+            },
+            "filter": "driver_id=Balboa&capabilities=action_heater_mode"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      }
+    ]
+  },
+  "capabilities": {
+    "action_pump_state": {
+      "type": "boolean",
+      "title": {
+        "en": "Pump State",
+        "nl": "Pomp Status"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "action_light_state": {
+      "type": "boolean",
+      "title": {
+        "en": "Light State",
+        "nl": "Light Status"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "action_blower_state": {
+      "type": "boolean",
+      "title": {
+        "en": "Blower State",
+        "nl": "Blower Status"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "action_heater_mode": {
+      "type": "boolean",
+      "title": {
+        "en": "Heater",
+        "nl": "Verwarming"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "pair": {
+    "instructions": "Login with your ControlMySpa account",
+    "username": "Email",
+    "password": "Password",
+    "login": "Login",
+    "error": "Something went wrong. Check your login.",
+    "error_empty": "No Spa found."
+  },
+  "helpers": {
+    "days": "d",
+    "hours": "h",
+    "minutes": "m"
+  }
+}
