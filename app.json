@@ -65,11 +65,11 @@
     }
   },
   "bugs": {
-    "url": "https://community.athom.com/t/app-amberpro/50486"
+    "url": "https://community.homey.app/t/app-pro-controlmyspa/57870"
   },
   "source": "https://github.com/martijnpoppen/com.balboa",
-  "homeyCommunityTopicId": 50486,
-  "support": "https://community.athom.com/t/app-amberpro/50486",
+  "homeyCommunityTopicId": 57870,
+  "support": "https://community.homey.app/t/app-pro-controlmyspa/57870",
   "drivers": [
     {
       "id": "Balboa",
