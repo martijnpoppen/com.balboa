@@ -1,6 +1,6 @@
 {
   "id": "com.balboa",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -31,7 +31,7 @@
     ]
   },
   "category": [
-    "security"
+    "appliances"
   ],
   "images": {
     "large": "/assets/images/large.jpg",
@@ -186,8 +186,8 @@
       {
         "id": "action_pump_state_flow",
         "title": {
-          "en": "Set Pump",
-          "nl": "Zet Pomp"
+          "en": "Turn Pump on or off",
+          "nl": "Zet Pomp aan of uit"
         },
         "titleFormatted": {
           "en": "Set Pump [[action_on_off]]",
@@ -231,11 +231,11 @@
       {
         "id": "action_light_state_flow",
         "title": {
-          "en": "Set Light",
-          "nl": "Zet Lamp"
+          "en": "Turn light on or off",
+          "nl": "Zet lamp aan of uit"
         },
         "titleFormatted": {
-          "en": "Set Light [[action_on_off]]",
+          "en": "Turn Light [[action_on_off]]",
           "nl": "Zet Lamp [[action_on_off]]"
         },
         "args": [
@@ -276,12 +276,12 @@
       {
         "id": "action_blower_state_flow",
         "title": {
-          "en": "Set Blower",
-          "nl": "Zet Blower"
+          "en": "Turn blower on or off",
+          "nl": "Zet blazer aan of uit"
         },
         "titleFormatted": {
-          "en": "Set Blower [[action_on_off]]",
-          "nl": "Zet Blower [[action_on_off]]"
+          "en": "Turn blower [[action_on_off]]",
+          "nl": "Zet blazer [[action_on_off]]"
         },
         "args": [
           {
@@ -321,12 +321,12 @@
       {
         "id": "action_heater_mode_flow",
         "title": {
-          "en": "Toggle Heater",
-          "nl": "Wissel Blower"
+          "en": "Toggle Heater on or off",
+          "nl": "Schakel verwarming aan of uit"
         },
         "titleFormatted": {
-          "en": "Toggle Heater",
-          "nl": "Wissel Verwarming"
+          "en": "Toggle Heater on or off",
+          "nl": "Schakel verwarming aan of uit"
         },
         "args": [
           {
@@ -370,7 +370,7 @@
       "type": "boolean",
       "title": {
         "en": "Blower State",
-        "nl": "Blower Status"
+        "nl": "Blazer Status"
       },
       "getable": true,
       "setable": true,
