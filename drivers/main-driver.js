@@ -1,6 +1,6 @@
 const Homey = require('homey');
-const Balboa = require('../lib/balboa');
-const { encrypt, mapName } = require('../lib/helpers');
+const ControlMySpa = require('../lib/balboa');
+const { encrypt } = require('../lib/helpers');
 
 module.exports = class mainDriver extends Homey.Driver {
     onInit() {
@@ -23,9 +23,9 @@ module.exports = class mainDriver extends Homey.Driver {
 
                 this.homey.app.log(`[Driver] ${this.id} - got config`, this.config);
     
-                this._balboaClient = await new Balboa(this.config.username, this.config.password);
+                this._controlMySpaClient = await new ControlMySpa(this.config.username, this.config.password);
                 
-                this.balboaData = await this._balboaClient.init();
+                this.balboaData = await this._controlMySpaClient.init();
             } catch (error) {
                 console.log(error);
                 throw new Error(this.homey.__('pair.error'));

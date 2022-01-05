@@ -1,5 +1,5 @@
 const Homey = require('homey');
-const Balboa = require('../lib/balboa');
+const ControlMySpa = require('../lib/balboa');
 const { sleep, decrypt, encrypt} = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
@@ -10,7 +10,7 @@ module.exports = class mainDevice extends Homey.Device {
 
             await this.checkCapabilities();
             await this.setCapabilityListeners();            
-            await this.setBalboaClient();
+            await this.setControlMySpaClient();
 
             await this.setAvailable();
         } catch (error) {
@@ -29,9 +29,9 @@ module.exports = class mainDevice extends Homey.Device {
             }
 
             if(newSettings.password !== oldSettings.password) {
-                await this.setBalboaClient({...newSettings, password: encrypt(newSettings.password)});
+                await this.setControlMySpaClient({...newSettings, password: encrypt(newSettings.password)});
             } else {
-                await this.setBalboaClient(newSettings);
+                await this.setControlMySpaClient(newSettings);
             }
 
             if(newSettings.password !== oldSettings.password) {
@@ -52,27 +52,27 @@ module.exports = class mainDevice extends Homey.Device {
     
 
     // ------------- API -------------
-    async setBalboaClient(overrideSettings = null) {
+    async setControlMySpaClient(overrideSettings = null) {
         const settings = overrideSettings ? overrideSettings : this.getSettings();
 
         try {
             this.config = {...settings, password: decrypt(settings.password)};
 
-            this.homey.app.log(`[Device] - ${this.getName()} => setBalboaClient Got config`, {...this.config, username: 'LOG', password: 'LOG'});
+            this.homey.app.log(`[Device] - ${this.getName()} => setControlMySpaClient Got config`, {...this.config, username: 'LOG', password: 'LOG'});
             
-            this._balboaClient = await new Balboa(this.config.username, this.config.password);
+            this._controlMySpaClient = await new ControlMySpa(this.config.username, this.config.password);
             
-            await this._balboaClient.deviceInit();
+            await this._controlMySpaClient.deviceInit();
 
             await this.setCapabilityValues();
             await this.setAvailable();
             await this.setIntervalsAndFlows(settings);
 
         } catch (error) {
-            this.homey.app.log(`[Device] ${this.getName()} - setBalboaClient - error =>`, error);
+            this.homey.app.log(`[Device] ${this.getName()} - setControlMySpaClient - error =>`, error);
 
             if(settings.sso === false) {
-                this.homey.app.log(`[Device] ${this.getName()} - setBalboaClient - need_admin`);
+                this.homey.app.log(`[Device] ${this.getName()} - setControlMySpaClient - need_admin`);
                 await this.setUnavailable(this.homey.__("amber.need_admin"));
             }
         }
@@ -91,7 +91,7 @@ module.exports = class mainDevice extends Homey.Device {
         try {
             this.homey.app.log(`[Device] ${this.getName()} - onCapability_TEMPERATURE`, value);
  
-            await this._balboaClient.setTemp(value);
+            await this._controlMySpaClient.setTemp(value);
  
              return Promise.resolve(true);
          } catch (e) {
@@ -106,9 +106,9 @@ module.exports = class mainDevice extends Homey.Device {
             this.homey.app.log(`[Device] ${this.getName()} - onCapability_LOCKED`, value);
 
             if(value) {
-                await this._balboaClient.lockPanel();
+                await this._controlMySpaClient.lockPanel();
             } else {
-                await this._balboaClient.unlockPanel();
+                await this._controlMySpaClient.unlockPanel();
             }
 
             return Promise.resolve(true);
@@ -124,21 +124,21 @@ module.exports = class mainDevice extends Homey.Device {
  
             if('action_blower_state' in value) {
                 const valueString = value.action_blower_state ? 'HIGH' : 'OFF';
-                await this._balboaClient.setBlowerState(0, valueString);
+                await this._controlMySpaClient.setBlowerState(0, valueString);
             }
 
             if('action_light_state' in value) {
                 const valueString = value.action_light_state ? 'HIGH' : 'OFF';
-                await this._balboaClient.setLightState(0, valueString);
+                await this._controlMySpaClient.setLightState(0, valueString);
             }
 
             if('action_jet_state' in value) {
                 const valueString = value.action_jet_state ? 'HIGH' : 'OFF';
-                await this._balboaClient.setJetState(0, valueString);   
+                await this._controlMySpaClient.setJetState(0, valueString);   
             }
 
             if('action_heater_mode' in value) {
-                await this._balboaClient.toggleHeaterMode();
+                await this._controlMySpaClient.toggleHeaterMode();
             }
  
              return Promise.resolve(true);
@@ -166,7 +166,7 @@ module.exports = class mainDevice extends Homey.Device {
         this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues`);
 
         try { 
-            const deviceInfo = await this._balboaClient.getSpa();
+            const deviceInfo = await this._controlMySpaClient.getSpa();
             const {currentState} = deviceInfo;
             let {targetDesiredTemp, currentTemp, panelLock, heaterMode, components} = currentState
             
