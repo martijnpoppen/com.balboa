@@ -1,0 +1,12 @@
+{
+  "name": "com.balboa",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martijnpoppen/com.balboa"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
