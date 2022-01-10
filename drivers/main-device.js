@@ -83,8 +83,6 @@ module.exports = class mainDevice extends Homey.Device {
         await this.registerCapabilityListener('locked', this.onCapability_LOCKED.bind(this));
         await this.registerCapabilityListener('target_temperature', this.onCapability_TEMPERATURE.bind(this));
         await this.registerMultipleCapabilityListener(["action_pump_state", "action_light_state", "action_blower_state", "action_heater_mode"], this.onCapability_ACTION.bind(this));
-        
-        // await this.registerCapabilityListener('action_update_data', this.onCapability_UPDATE_DATA.bind(this));
     }
 
     async onCapability_TEMPERATURE(value) {
@@ -168,7 +166,7 @@ module.exports = class mainDevice extends Homey.Device {
         try { 
             const deviceInfo = await this._controlMySpaClient.getSpa();
             const {currentState} = deviceInfo;
-            let {targetDesiredTemp, currentTemp, panelLock, heaterMode, components} = currentState
+            let {targetDesiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online} = currentState
             
             const light = await this.getComponent('LIGHT', components);
             const pump = await this.getComponent('PUMP', components);
@@ -181,10 +179,13 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setCapabilityValue('action_light_state', light);
             await this.setCapabilityValue('action_blower_state', blower);
             await this.setCapabilityValue('action_heater_mode', heaterMode === 'READY');
+            await this.setCapabilityValue('measure_online', !online);
+            await this.setCapabilityValue('measure_runmode', runMode === 'Ready');
            
             if(currentTemp) await this.setCapabilityValue('measure_temperature', parseFloat(currentTemp) > 40 ? 40 : parseFloat(currentTemp));
             if(targetDesiredTemp) await this.setCapabilityValue('target_temperature', parseFloat(targetDesiredTemp) > 40 ? 40 : parseFloat(targetDesiredTemp));
         } catch (error) {
+            await this.setCapabilityValue('measure_online', false);
             this.homey.app.log(error);
         }
     }
