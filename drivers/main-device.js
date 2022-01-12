@@ -166,11 +166,12 @@ module.exports = class mainDevice extends Homey.Device {
         try { 
             const deviceInfo = await this._controlMySpaClient.getSpa();
             const {currentState} = deviceInfo;
-            let {targetDesiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online} = currentState
+            let {targetDesiredTemp, desiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online} = currentState
             
             const light = await this.getComponent('LIGHT', components);
             const pump = await this.getComponent('PUMP', components);
             const blower = await this.getComponent('BLOWER', components);
+            const heater = heaterMode === 'READY';
 
             this.homey.app.log(`[Device] ${this.getName()} - deviceInfo =>`, currentState);
                     
@@ -178,12 +179,13 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setCapabilityValue('action_pump_state', pump);
             await this.setCapabilityValue('action_light_state', light);
             await this.setCapabilityValue('action_blower_state', blower);
-            await this.setCapabilityValue('action_heater_mode', heaterMode === 'READY');
-            await this.setCapabilityValue('measure_online', !online);
+            await this.setCapabilityValue('action_heater_mode', heater);
+            await this.setCapabilityValue('measure_online', online);
             await this.setCapabilityValue('measure_runmode', runMode === 'Ready');
            
             if(currentTemp) await this.setCapabilityValue('measure_temperature', parseFloat(currentTemp) > 40 ? 40 : parseFloat(currentTemp));
-            if(targetDesiredTemp) await this.setCapabilityValue('target_temperature', parseFloat(targetDesiredTemp) > 40 ? 40 : parseFloat(targetDesiredTemp));
+            if(heater && targetDesiredTemp) await this.setCapabilityValue('target_temperature', parseFloat(targetDesiredTemp) > 40 ? 40 : parseFloat(targetDesiredTemp));
+            if(!heater && targetDesiredTemp) await this.setCapabilityValue('target_temperature', parseFloat(targetDesiredTemp) > 40 ? 40 : parseFloat(targetDesiredTemp));
         } catch (error) {
             await this.setCapabilityValue('measure_online', false);
             this.homey.app.log(error);
