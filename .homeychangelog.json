@@ -13,5 +13,8 @@
   },
   "1.1.0": {
     "en": "NEW: add online and ready state"
+  },
+  "1.1.1": {
+    "en": "FIX: online state & desiredTemp"
   }
 }
