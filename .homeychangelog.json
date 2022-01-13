@@ -19,5 +19,8 @@
   },
   "1.1.2": {
     "en": "FIX: align driver names"
+  },
+  "1.1.3": {
+    "en": "FIX: flowcards"
   }
 }
