@@ -22,5 +22,8 @@
   },
   "1.1.3": {
     "en": "FIX: flowcards"
+  },
+  "1.2.0": {
+    "en": "NEW: add multiple pumps and blowers | NEW: add manual update button (flowcard) | FIX: desiredTemperature when heater mode changes"
   }
 }
