@@ -1,6 +1,6 @@
 {
   "id": "com.balboa",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -89,9 +89,34 @@
         "action_pump_state",
         "action_light_state",
         "action_blower_state",
-        "action_heater_mode"
+        "action_heater_mode",
+        "action_update_data"
       ],
       "capabilitiesOptions": {
+        "action_pump_state.1": {
+          "title": {
+            "en": "Pump State 2",
+            "nl": "Pomp Status 2"
+          }
+        },
+        "action_pump_state.2": {
+          "title": {
+            "en": "Pump State 3",
+            "nl": "Pomp Status 3"
+          }
+        },
+        "action_blower_state.1": {
+          "title": {
+            "en": "Blower State 2",
+            "nl": "Blazer Status 2"
+          }
+        },
+        "action_blower_state.2": {
+          "title": {
+            "en": "Blower State 3",
+            "nl": "Blazer Status 3"
+          }
+        },
         "target_temperature": {
           "min": 15.5,
           "max": 40
@@ -188,12 +213,12 @@
       {
         "id": "action_pump_state_flow",
         "title": {
-          "en": "Turn Pump on or off",
-          "nl": "Zet Pomp aan of uit"
+          "en": "Turn Pump 1 on or off",
+          "nl": "Zet Pomp 1 aan of uit"
         },
         "titleFormatted": {
-          "en": "Set Pump [[action_on_off]]",
-          "nl": "Zet Pomp [[action_on_off]]"
+          "en": "Set Pump 1 [[action_on_off]]",
+          "nl": "Zet Pomp 1 [[action_on_off]]"
         },
         "args": [
           {
@@ -204,6 +229,96 @@
               "nl": "Selecteer apparaat"
             },
             "filter": "driver_id=Balboa&capabilities=action_pump_state"
+          },
+          {
+            "name": "action_on_off",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "action_pump_state_flow_1",
+        "title": {
+          "en": "Turn Pump 2 on or off",
+          "nl": "Zet Pomp 2 aan of uit"
+        },
+        "titleFormatted": {
+          "en": "Set Pump 2 [[action_on_off]]",
+          "nl": "Zet Pomp 2 [[action_on_off]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Selecteer apparaat"
+            },
+            "filter": "driver_id=Balboa&capabilities=action_pump_state.1"
+          },
+          {
+            "name": "action_on_off",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "action_pump_state_flow_2",
+        "title": {
+          "en": "Turn Pump 3 on or off",
+          "nl": "Zet Pomp 3 aan of uit"
+        },
+        "titleFormatted": {
+          "en": "Set Pump 3 [[action_on_off]]",
+          "nl": "Zet Pomp 3 [[action_on_off]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Selecteer apparaat"
+            },
+            "filter": "driver_id=Balboa&capabilities=action_pump_state.2"
           },
           {
             "name": "action_on_off",
@@ -278,12 +393,12 @@
       {
         "id": "action_blower_state_flow",
         "title": {
-          "en": "Turn blower on or off",
-          "nl": "Zet blazer aan of uit"
+          "en": "Turn blower 1 on or off",
+          "nl": "Zet blazer 1 aan of uit"
         },
         "titleFormatted": {
-          "en": "Turn blower [[action_on_off]]",
-          "nl": "Zet blazer [[action_on_off]]"
+          "en": "Turn blower 1 [[action_on_off]]",
+          "nl": "Zet blazer 1 [[action_on_off]]"
         },
         "args": [
           {
@@ -294,6 +409,96 @@
               "nl": "Selecteer apparaat"
             },
             "filter": "driver_id=Balboa&capabilities=action_blower_state"
+          },
+          {
+            "name": "action_on_off",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "action_blower_state_flow_1",
+        "title": {
+          "en": "Turn blower 2 on or off",
+          "nl": "Zet blazer 2 aan of uit"
+        },
+        "titleFormatted": {
+          "en": "Turn blower 2 [[action_on_off]]",
+          "nl": "Zet blazer 2 [[action_on_off]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Selecteer apparaat"
+            },
+            "filter": "driver_id=Balboa&capabilities=action_blower_state.1"
+          },
+          {
+            "name": "action_on_off",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "action_blower_state_flow_2",
+        "title": {
+          "en": "Turn blower 3 on or off",
+          "nl": "Zet blazer 3 aan of uit"
+        },
+        "titleFormatted": {
+          "en": "Turn blower 3 [[action_on_off]]",
+          "nl": "Zet blazer 3 [[action_on_off]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Selecteer apparaat"
+            },
+            "filter": "driver_id=Balboa&capabilities=action_blower_state.2"
           },
           {
             "name": "action_on_off",
@@ -344,15 +549,50 @@
         "platforms": [
           "local"
         ]
+      },
+      {
+        "id": "action_update_data_flow",
+        "title": {
+          "en": "Update manual",
+          "nl": "Handmatig updaten"
+        },
+        "titleFormatted": {
+          "en": "Update manual",
+          "nl": "Handmatig updaten"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Selecteer apparaat"
+            },
+            "filter": "driver_id=Balboa&capabilities=action_update_data"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
       }
     ]
   },
   "capabilities": {
+    "action_update_data": {
+      "type": "boolean",
+      "title": {
+        "en": "Update manual",
+        "nl": "Handmatig updaten"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
     "action_pump_state": {
       "type": "boolean",
       "title": {
-        "en": "Pump State",
-        "nl": "Pomp Status"
+        "en": "Pump State 1",
+        "nl": "Pomp Status 1"
       },
       "getable": true,
       "setable": true,
@@ -371,8 +611,8 @@
     "action_blower_state": {
       "type": "boolean",
       "title": {
-        "en": "Blower State",
-        "nl": "Blazer Status"
+        "en": "Blower State 1",
+        "nl": "Blazer Status 1"
       },
       "getable": true,
       "setable": true,

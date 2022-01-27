@@ -8,10 +8,6 @@ module.exports = class mainDriver extends Homey.Driver {
         this.homey.app.log(`[Driver] - version`, Homey.manifest.version);
     }
 
-    deviceType() {
-        return 'other';
-    }
-
     async onPair(session) {
         session.setHandler("login", async (data) => {
             try {

@@ -1,6 +1,6 @@
 Control your Balboa Spa with this app.
 
-**Current features:**
+Current features:
 - Get spa status
 - Set temperature
 - Toggle heater mode
