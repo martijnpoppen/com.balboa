@@ -49,5 +49,8 @@
   },
   "1.4.6": {
     "en": "FIX: setting pump and blower HIGH/OFF"
+  },
+  "1.4.7": {
+    "en": "FIX: light button state"
   }
 }
