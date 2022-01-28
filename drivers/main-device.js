@@ -78,7 +78,7 @@ module.exports = class mainDevice extends Homey.Device {
         await this.registerCapabilityListener('locked', this.onCapability_LOCKED.bind(this));
         await this.registerCapabilityListener('target_temperature', this.onCapability_TEMPERATURE.bind(this));
         await this.registerCapabilityListener('action_update_data', this.onCapability_UPDATE_DATA.bind(this));
-        await this.registerMultipleCapabilityListener(["action_pump_state", "action_pump_state.1", "action_pump_state.2", "action_light_state", "action_blower_state", "action_blower_state.1", "action_blower_state.2", "action_heater_mode"], this.onCapability_ACTION.bind(this));
+        await this.registerMultipleCapabilityListener(["action_pump_state", "action_pump_state.1", "action_pump_state.2", "action_light_state", "action_blower_state", "action_blower_state.1", "action_blower_state.2", "action_heater_mode", "action_temp_range"], this.onCapability_ACTION.bind(this));
     }
 
     async onCapability_TEMPERATURE(value) {
@@ -114,7 +114,7 @@ module.exports = class mainDevice extends Homey.Device {
 
     async onCapability_ACTION(value) {
         try {
-            this.homey.app.log(`[Device] ${this.getName()} - onCapability_TEMPERATURE`, value);
+            this.homey.app.log(`[Device] ${this.getName()} - onCapability_ACTION`, value);
  
             if('action_blower_state' in value) {
                 const valueString = value.action_blower_state ? 'HIGH' : 'OFF';
@@ -122,12 +122,12 @@ module.exports = class mainDevice extends Homey.Device {
             }
 
             if('action_blower_state.1' in value) {
-                const valueString = value.action_blower_state ? 'HIGH' : 'OFF';
+                const valueString = value['action_blower_state.1'] ? 'HIGH' : 'OFF';
                 await this._controlMySpaClient.setBlowerState(1, valueString);
             }
 
             if('action_blower_state.2' in value) {
-                const valueString = value.action_blower_state ? 'HIGH' : 'OFF';
+                const valueString = value['action_blower_state.2'] ? 'HIGH' : 'OFF';
                 await this._controlMySpaClient.setBlowerState(2, valueString);
             }
 
@@ -142,12 +142,12 @@ module.exports = class mainDevice extends Homey.Device {
             }
 
             if('action_pump_state.1' in value) {
-                const valueString = value.action_pump_state ? 'HIGH' : 'OFF';
+                const valueString = value['action_pump_state.1'] ? 'HIGH' : 'OFF';
                 await this._controlMySpaClient.setJetState(1, valueString);   
             }
 
             if('action_pump_state.2' in value) {
-                const valueString = value.action_pump_state ? 'HIGH' : 'OFF';
+                const valueString = value['action_pump_state.2'] ? 'HIGH' : 'OFF';
                 await this._controlMySpaClient.setJetState(2, valueString);   
             }
 
@@ -156,8 +156,7 @@ module.exports = class mainDevice extends Homey.Device {
             }
 
             if('action_temp_range' in value) {
-                const valueString = value.action_pump_state ? 'HIGH' : 'LOW';
-                await this._controlMySpaClient.setTempRange(valueString);   
+                await this._controlMySpaClient.setTempRange(value.action_pump_state);   
             }
  
              return Promise.resolve(true);
@@ -191,42 +190,63 @@ module.exports = class mainDevice extends Homey.Device {
             const deviceInfo = await this._controlMySpaClient.getSpa();
             const {currentState} = deviceInfo;
             let {targetDesiredTemp, desiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online, tempRange} = currentState
-            
-            const light = await this.getComponent('LIGHT', components);
+
+            this.homey.app.log(`[Device] ${this.getName()} - deviceInfo =>`, currentState);
+
+            // Check for existence
             const pump0 = await this.getComponent('PUMP', components, '0');
             const pump1 = await this.getComponent('PUMP', components, '1');
             const pump2 = await this.getComponent('PUMP', components, '2');
             const blower0 = await this.getComponent('BLOWER', components, '0');
             const blower1 = await this.getComponent('BLOWER', components, '1');
             const blower2 = await this.getComponent('BLOWER', components, '2');
-            const heater = heaterMode === 'READY';
-            const tempranges = tempRange === 'HIGH'
-
-            this.homey.app.log(`[Device] ${this.getName()} - deviceInfo =>`, currentState);
 
             if(check) {
+                if(pump0) await this.addCapability('action_pump_state');
                 if(pump1) await this.addCapability('action_pump_state.1');
                 if(pump2) await this.addCapability('action_pump_state.2');
+                if(blower0) await this.addCapability('action_blower_state');
                 if(blower1) await this.addCapability('action_blower_state.1');
                 if(blower2) await this.addCapability('action_blower_state.2');
             }
             
+            // ------------ Get values --------------      
+            const light = await this.getComponentValue('LIGHT', components);
+            const heater = heaterMode === 'READY';
+            const tempranges = tempRange === 'HIGH'
+      
+            if(pump0) {
+                const pump0_val = pump0.value === 'HIGH';
+                await this.setCapabilityValue('action_pump_state', pump0_val);
+            }
+            if(pump1) {
+                const pump1_val = pump1.value === 'HIGH';
+                await this.setCapabilityValue('action_pump_state.1', pump1_val);
+            }
+            if(pump2) {
+                const pump2_val = pump2.value === 'HIGH';
+                await this.setCapabilityValue('action_pump_state.2', pump2_val);
+            }
+            if(blower0) {
+                const blower0_val = blower0.value === 'HIGH';
+                await this.setCapabilityValue('action_blower_state', blower0_val);
+            }
+            if(blower1) {
+                const blower1_val = blower1.value === 'HIGH';
+                await this.setCapabilityValue('action_blower_state.1', blower1_val);
+            }
+            if(blower2) {
+                const blower2_val = blower2.value === 'HIGH';
+                await this.setCapabilityValue('action_blower_state.2', blower2_val);
+            }
+
             await this.setCapabilityValue('action_update_data', false);
             await this.setCapabilityValue('locked', panelLock);
-            await this.setCapabilityValue('action_pump_state', pump0);
-            await this.setCapabilityValue('action_blower_state', blower0);
-
-            if(pump1) await this.setCapabilityValue('action_pump_state.1', pump1);
-            if(pump2) await this.setCapabilityValue('action_pump_state.2', pump2);
-            if(blower1) await this.setCapabilityValue('action_blower_state.1', blower1);
-            if(blower2) await this.setCapabilityValue('action_blower_state.2', blower2);
-
             await this.setCapabilityValue('action_light_state', light);
             await this.setCapabilityValue('action_heater_mode', heater);
             await this.setCapabilityValue('action_temp_range', tempranges);
             await this.setCapabilityValue('measure_temperature_range', tempRange);
             await this.setCapabilityValue('measure_heater_mode', heaterMode);
-            
             await this.setCapabilityValue('measure_online', online);
             await this.setCapabilityValue('measure_runmode', runMode === 'Ready');
            
@@ -247,10 +267,12 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     async getComponent(val, components, index = null) {
+        return components.find((el, id) => el.componentType === val && el.port === index);
+    }
+
+    async getComponentValue(val, components) {
         const comp = components.find((el, id) => el.componentType === val);
-        if(comp && index) {
-            return comp.value === 'HIGH' && comp.port === index
-        } else if(comp) {
+        if(comp) {
             return comp.value === 'HIGH'
         }
 
