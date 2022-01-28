@@ -1,6 +1,6 @@
 {
   "id": "com.balboa",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -90,7 +90,6 @@
         "measure_heater_mode",
         "action_pump_state",
         "action_light_state",
-        "action_blower_state",
         "action_heater_mode",
         "action_update_data",
         "action_temp_range"
@@ -610,11 +609,11 @@
       {
         "id": "action_update_data_flow",
         "title": {
-          "en": "Update manual",
+          "en": "Manual update",
           "nl": "Handmatig updaten"
         },
         "titleFormatted": {
-          "en": "Update manual",
+          "en": "Manual update",
           "nl": "Handmatig updaten"
         },
         "args": [

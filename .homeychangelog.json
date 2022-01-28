@@ -31,5 +31,8 @@
   },
   "1.4.0": {
     "en": "NEW: add sensor values to sensor tab"
+  },
+  "1.4.1": {
+    "en": "FIX: flowcard listener missing + language changes"
   }
 }
