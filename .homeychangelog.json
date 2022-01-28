@@ -40,5 +40,8 @@
   },
   "1.4.3": {
     "en": "FIX: add/remove pumps & blowers dynamically"
+  },
+  "1.4.4": {
+    "en": "FIX: add/remove pumps & blowers dynamically"
   }
 }
