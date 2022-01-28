@@ -25,5 +25,8 @@
   },
   "1.2.0": {
     "en": "NEW: add multiple pumps and blowers | NEW: add manual update button (flowcard) | FIX: desiredTemperature when heater mode changes"
+  },
+  "1.3.0": {
+    "en": "NEW: add temperature range"
   }
 }
