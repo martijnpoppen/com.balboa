@@ -34,5 +34,8 @@
   },
   "1.4.1": {
     "en": "FIX: flowcard listener missing + language changes"
+  },
+  "1.4.2": {
+    "en": "FIX: blower"
   }
 }
