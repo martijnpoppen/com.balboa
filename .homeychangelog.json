@@ -43,5 +43,11 @@
   },
   "1.4.4": {
     "en": "FIX: add/remove pumps & blowers dynamically"
+  },
+  "1.4.5": {
+    "en": "FIX: translation + LOW/HIGH setting"
+  },
+  "1.4.6": {
+    "en": "FIX: setting pump and blower HIGH/OFF"
   }
 }
