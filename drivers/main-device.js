@@ -73,6 +73,11 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
+
+    async resetControlMySpaClient() {
+        await this._controlMySpaClient.deviceInit();
+    }
+
     // ------------- CapabilityListeners -------------
     async setCapabilityListeners() {
         await this.registerCapabilityListener('locked', this.onCapability_LOCKED.bind(this));
@@ -262,7 +267,8 @@ module.exports = class mainDevice extends Homey.Device {
           
         } catch (error) {
             await this.setCapabilityValue('measure_online', false);
-            this.homey.app.log(error);
+            await this.resetControlMySpaClient();
+            this.homey.app.error(error);
         }
     }
 
