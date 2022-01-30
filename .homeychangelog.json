@@ -52,5 +52,8 @@
   },
   "1.4.7": {
     "en": "FIX: light button state"
+  },
+  "1.4.8": {
+    "en": "FIX: reset Auth Token when expired"
   }
 }
