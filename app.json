@@ -1,6 +1,6 @@
 {
   "id": "com.balboa",
-  "version": "1.4.8",
+  "version": "1.5.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -219,6 +219,218 @@
     }
   ],
   "flow": {
+    "conditions": [
+      {
+        "id": "condition_ONLINE",
+        "title": {
+          "en": "is online",
+          "nl": "is online"
+        },
+        "titleFormatted": {
+          "en": "!{{is|isn't}} online",
+          "nl": "!{{is|is niet}} online"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "condition_RUNMODE",
+        "title": {
+          "en": "Is ready",
+          "nl": "Is beschikbaar"
+        },
+        "titleFormatted": {
+          "en": "!{{is|isn't}} ready",
+          "nl": "!{{is|is niet}} beschikbaar"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "condition_LIGHT",
+        "title": {
+          "en": "Light is on",
+          "nl": "Licht is aan"
+        },
+        "titleFormatted": {
+          "en": "Light is !{{on|off}}",
+          "nl": "Licht is !{{aan|uit}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "condition_HEATER",
+        "title": {
+          "en": "heater is ready",
+          "nl": "verwarming is gereed"
+        },
+        "titleFormatted": {
+          "en": "heater is !{{ready|rest}}",
+          "nl": "verwarming is !{{gereed|in rust}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "condition_pump_state",
+        "title": {
+          "en": "Pump 1 is on",
+          "nl": "Pomp 1 is aan"
+        },
+        "titleFormatted": {
+          "en": "Pump 1 is !{{on|off}}",
+          "nl": "Pomp 1 is !{{aan|uit}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa&capabilities=action_pump_state"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "condition_pump_state_1",
+        "title": {
+          "en": "Pump 2 is on",
+          "nl": "Pomp 2 is aan"
+        },
+        "titleFormatted": {
+          "en": "Pump 2 is !{{on|off}}",
+          "nl": "Pomp 2 is !{{aan|uit}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa&capabilities=action_pump_state.1"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "condition_pump_state_2",
+        "title": {
+          "en": "Pump 3 is on",
+          "nl": "Pomp 3 is aan"
+        },
+        "titleFormatted": {
+          "en": "Pump 3 is !{{on|off}}",
+          "nl": "Pomp 3 is !{{aan|uit}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa&capabilities=action_pump_state.2"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "condition_blower_state",
+        "title": {
+          "en": "Blower 1 is on",
+          "nl": "Blazer 1 is aan"
+        },
+        "titleFormatted": {
+          "en": "Blower 1 is !{{on|off}}",
+          "nl": "Blazer 1 is !{{aan|uit}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa&capabilities=action_blower_state"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "condition_blower_state_1",
+        "title": {
+          "en": "Blower 2 is on",
+          "nl": "Blazer 2 is aan"
+        },
+        "titleFormatted": {
+          "en": "Blower 2 is !{{on|off}}",
+          "nl": "Blazer 2 is !{{aan|uit}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa&capabilities=action_blower_state.1"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "condition_blower_state_2",
+        "title": {
+          "en": "Blower 3 is on",
+          "nl": "Blazer 3 is aan"
+        },
+        "titleFormatted": {
+          "en": "Blower 3 is !{{on|off}}",
+          "nl": "Blazer 3 is !{{aan|uit}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Balboa&capabilities=action_blower_state.2"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      }
+    ],
     "actions": [
       {
         "id": "action_pump_state_flow",

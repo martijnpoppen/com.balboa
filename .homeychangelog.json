@@ -55,5 +55,8 @@
   },
   "1.4.8": {
     "en": "FIX: reset Auth Token when expired"
+  },
+  "1.5.0": {
+    "en": "NEW: add condition flowcards"
   }
 }
