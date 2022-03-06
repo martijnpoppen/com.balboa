@@ -58,5 +58,8 @@
   },
   "1.5.0": {
     "en": "NEW: add condition flowcards"
+  },
+  "1.5.1": {
+    "en": "FIX: temperature ranges"
   }
 }
