@@ -163,6 +163,8 @@ module.exports = class mainDevice extends Homey.Device {
             if('action_temp_range' in value) {
                 await this._controlMySpaClient.setTempRange(value.action_pump_state);   
             }
+
+            await this.setCapabilityValues();
  
              return Promise.resolve(true);
          } catch (e) {
@@ -261,8 +263,8 @@ module.exports = class mainDevice extends Homey.Device {
                 if(!heater && desiredTemp) await this.setCapabilityValue('target_temperature',  Math.round(parseFloat(desiredTemp)) > 40 ? 40 :  Math.round(parseFloat(desiredTemp)));
             } else {
                 if(currentTemp) await this.setCapabilityValue('measure_temperature', parseFloat(currentTemp) > 40 ? 40 : parseFloat(currentTemp));
-                if(heater && targetDesiredTemp) await this.setCapabilityValue('target_temperature', parseFloat(targetDesiredTemp) > 40 ? 40 : parseFloat(targetDesiredTemp));
-                if(!heater && desiredTemp) await this.setCapabilityValue('target_temperature', parseFloat(desiredTemp) > 40 ? 40 : parseFloat(desiredTemp));
+                if(tempranges && targetDesiredTemp) await this.setCapabilityValue('target_temperature', parseFloat(targetDesiredTemp) > 40 ? 40 : parseFloat(targetDesiredTemp));
+                if(!tempranges && desiredTemp) await this.setCapabilityValue('target_temperature', parseFloat(desiredTemp) > 40 ? 40 : parseFloat(desiredTemp));
             }
           
         } catch (error) {
