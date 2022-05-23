@@ -61,5 +61,8 @@
   },
   "1.5.1": {
     "en": "FIX: temperature ranges"
+  },
+  "1.5.2": {
+    "en": "FIX: app crashes due to Homey 7.4.1"
   }
 }
