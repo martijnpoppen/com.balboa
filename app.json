@@ -1,6 +1,6 @@
 {
   "id": "com.balboa",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -220,189 +220,189 @@
   ],
   "flow": {
     "triggers": [
-        {
-          "id": "action_pump_state_changed",
-          "title": {
-            "en": "Pump State 1 changed",
-            "nl": "Pomp Status 1 veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+      {
+        "id": "action_pump_state_changed",
+        "title": {
+          "en": "Pump State 1 changed",
+          "nl": "Pomp Status 1 veranderd"
         },
-        {
-          "id": "action_pump_state_1_changed",
-          "title": {
-            "en": "Pump State 2 changed",
-            "nl": "Pomp Status 2 veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "action_pump_state_1_changed",
+        "title": {
+          "en": "Pump State 2 changed",
+          "nl": "Pomp Status 2 veranderd"
         },
-        {
-          "id": "action_pump_state_2_changed",
-          "title": {
-            "en": "Pump State 3 changed",
-            "nl": "Pomp Status 3 veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "action_pump_state_2_changed",
+        "title": {
+          "en": "Pump State 3 changed",
+          "nl": "Pomp Status 3 veranderd"
         },
-        {
-          "id": "action_light_state_changed",
-          "title": {
-            "en": "Light State changed",
-            "nl": "Lamp Status veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "action_light_state_changed",
+        "title": {
+          "en": "Light State changed",
+          "nl": "Lamp Status veranderd"
         },
-        {
-          "id": "action_blower_state_changed",
-          "title": {
-            "en": "Blower State 1 changed",
-            "nl": "Blazer Status 1 veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "action_blower_state_changed",
+        "title": {
+          "en": "Blower State 1 changed",
+          "nl": "Blazer Status 1 veranderd"
         },
-        {
-          "id": "action_blower_state_1_changed",
-          "title": {
-            "en": "Blower State 2 changed",
-            "nl": "Blazer Status 2 veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "action_blower_state_1_changed",
+        "title": {
+          "en": "Blower State 2 changed",
+          "nl": "Blazer Status 2 veranderd"
         },
-        {
-          "id": "action_blower_state_2_changed",
-          "title": {
-            "en": "Blower State 3 changed",
-            "nl": "Blazer Status 3 veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "action_blower_state_2_changed",
+        "title": {
+          "en": "Blower State 3 changed",
+          "nl": "Blazer Status 3 veranderd"
         },
-        {
-          "id": "action_temp_range_changed",
-          "title": {
-            "en": "Temperature range changed",
-            "nl": "Temperatuur bereik veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "action_temp_range_changed",
+        "title": {
+          "en": "Temperature range changed",
+          "nl": "Temperatuur bereik veranderd"
         },
-        {
-          "id": "action_heater_mode_changed",
-          "title": {
-            "en": "Heater changed",
-            "nl": "Verwarming veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "action_heater_mode_changed",
+        "title": {
+          "en": "Heater changed",
+          "nl": "Verwarming veranderd"
         },
-        {
-          "id": "measure_online_changed",
-          "title": {
-            "en": "Online state has changed",
-            "nl": "Online status is veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "measure_online_changed",
+        "title": {
+          "en": "Online state has changed",
+          "nl": "Online status is veranderd"
         },
-        {
-          "id": "measure_runmode_changed",
-          "title": {
-            "en": "Is ready state has changed",
-            "nl": "Is beschikbaar status is veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "measure_runmode_changed",
+        "title": {
+          "en": "Is ready state has changed",
+          "nl": "Is beschikbaar status is veranderd"
         },
-        {
-          "id": "measure_temperature_range_changed",
-          "title": {
-            "en": "Temperature range has changed",
-            "nl": "Temperatuur bereik is veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "measure_temperature_range_changed",
+        "title": {
+          "en": "Temperature range has changed",
+          "nl": "Temperatuur bereik is veranderd"
         },
-        {
-          "id": "measure_heater_mode_changed",
-          "title": {
-            "en": "Heater has changed",
-            "nl": "Verwarming is veranderd"
-          },
-          "args": [
-            {
-              "type": "device",
-              "name": "device",
-              "filter": "driver_id=Balboa"
-            }
-          ]
-        }
-      ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      },
+      {
+        "id": "measure_heater_mode_changed",
+        "title": {
+          "en": "Heater has changed",
+          "nl": "Verwarming is veranderd"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Balboa"
+          }
+        ]
+      }
+    ],
     "conditions": [
       {
         "id": "condition_ONLINE",
