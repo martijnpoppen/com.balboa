@@ -219,6 +219,190 @@
     }
   ],
   "flow": {
+    "triggers": [
+        {
+          "id": "action_pump_state_changed",
+          "title": {
+            "en": "Pump State 1 changed",
+            "nl": "Pomp Status 1 veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "action_pump_state_1_changed",
+          "title": {
+            "en": "Pump State 2 changed",
+            "nl": "Pomp Status 2 veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "action_pump_state_2_changed",
+          "title": {
+            "en": "Pump State 3 changed",
+            "nl": "Pomp Status 3 veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "action_light_state_changed",
+          "title": {
+            "en": "Light State changed",
+            "nl": "Lamp Status veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "action_blower_state_changed",
+          "title": {
+            "en": "Blower State 1 changed",
+            "nl": "Blazer Status 1 veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "action_blower_state_1_changed",
+          "title": {
+            "en": "Blower State 2 changed",
+            "nl": "Blazer Status 2 veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "action_blower_state_2_changed",
+          "title": {
+            "en": "Blower State 3 changed",
+            "nl": "Blazer Status 3 veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "action_temp_range_changed",
+          "title": {
+            "en": "Temperature range changed",
+            "nl": "Temperatuur bereik veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "action_heater_mode_changed",
+          "title": {
+            "en": "Heater changed",
+            "nl": "Verwarming veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "measure_online_changed",
+          "title": {
+            "en": "Online state has changed",
+            "nl": "Online status is veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "measure_runmode_changed",
+          "title": {
+            "en": "Is ready state has changed",
+            "nl": "Is beschikbaar status is veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "measure_temperature_range_changed",
+          "title": {
+            "en": "Temperature range has changed",
+            "nl": "Temperatuur bereik is veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        },
+        {
+          "id": "measure_heater_mode_changed",
+          "title": {
+            "en": "Heater has changed",
+            "nl": "Verwarming is veranderd"
+          },
+          "args": [
+            {
+              "type": "device",
+              "name": "device",
+              "filter": "driver_id=Balboa"
+            }
+          ]
+        }
+      ],
     "conditions": [
       {
         "id": "condition_ONLINE",
@@ -930,28 +1114,7 @@
             "nl": "HIGH"
           }
         }
-      ],
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_temperature_range_changed",
-            "title": {
-              "en": "Temperature range has changed",
-              "nl": "Temperatuur bereik is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_temperature_range",
-                "title": {
-                  "en": "Temperature range",
-                  "nl": "Temperatuur bereik"
-                },
-                "type": "string"
-              }
-            ]
-          }
-        ]
-      }
+      ]
     },
     "measure_heater_mode": {
       "type": "enum",
@@ -978,28 +1141,7 @@
             "nl": "Rest"
           }
         }
-      ],
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_heater_mode_changed",
-            "title": {
-              "en": "Heater has changed",
-              "nl": "Verwarming is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_heater_mode",
-                "title": {
-                  "en": "Heater",
-                  "nl": "Verwarming"
-                },
-                "type": "string"
-              }
-            ]
-          }
-        ]
-      }
+      ]
     },
     "measure_online": {
       "type": "boolean",
@@ -1010,28 +1152,7 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "assets/icons/wifi.svg",
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_online_changed",
-            "title": {
-              "en": "Online state has changed",
-              "nl": "Online status is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_online",
-                "title": {
-                  "en": "Is Online",
-                  "nl": "Is Online"
-                },
-                "type": "boolean"
-              }
-            ]
-          }
-        ]
-      }
+      "icon": "assets/icons/wifi.svg"
     },
     "measure_runmode": {
       "type": "boolean",
@@ -1042,28 +1163,7 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "assets/icons/lightning-charge.svg",
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_runmode_changed",
-            "title": {
-              "en": "Is ready state has changed",
-              "nl": "Is beschikbaar status is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_runmode",
-                "title": {
-                  "en": "Is ready",
-                  "nl": "Is beschikbaar"
-                },
-                "type": "boolean"
-              }
-            ]
-          }
-        ]
-      }
+      "icon": "assets/icons/lightning-charge.svg"
     }
   }
 }
