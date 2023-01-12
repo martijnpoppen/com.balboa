@@ -16,8 +16,7 @@ module.exports = class mainDriver extends Homey.Driver {
                     password: data.password
                 };
 
-
-                this.homey.app.log(`[Driver] ${this.id} - got config`, this.config);
+                this.homey.app.log(`[Driver] ${this.id} - got config`, {...this.config, username: "LOG", password: 'LOG'});
     
                 this._controlMySpaClient = await new ControlMySpa(this.config.username, this.config.password);
                 
@@ -32,18 +31,20 @@ module.exports = class mainDriver extends Homey.Driver {
             this.results = [];
             this.homey.app.log(`[Driver] ${this.id} - this.balboaData`, this.balboaData);
 
-
-            this.results.push({
-                name: this.balboaData.model,
-                data: {
-                    id: this.balboaData.oemId,
-                },
-                settings: {
-                    ...this.config,
-                    username: this.config.username,
-                    password: encrypt(this.config.password)
-                }
-            });
+            if(this.balboaData) {
+                this.results.push({
+                    name: this.balboaData.model,
+                    data: {
+                        id: this.balboaData.oemId,
+                    },
+                    settings: {
+                        ...this.config,
+                        username: this.config.username,
+                        password: encrypt(this.config.password)
+                    }
+                });
+            }
+            
 
             this.homey.app.log(`[Driver] ${this.id} - Found devices - `, this.results);
 

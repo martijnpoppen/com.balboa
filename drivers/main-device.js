@@ -1,6 +1,6 @@
 const Homey = require('homey');
 const ControlMySpa = require('../lib/balboa');
-const { sleep, decrypt, encrypt } = require('../lib/helpers');
+const { sleep, decrypt, encrypt, toCelsius } = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
@@ -170,7 +170,7 @@ module.exports = class mainDevice extends Homey.Device {
             }
 
             if ('action_temp_range' in value) {
-                await this._controlMySpaClient.setTempRange(value.action_pump_state);
+                await this._controlMySpaClient.setTempRange(value.action_temp_range);
             }
 
             await this.setCapabilityValues();
@@ -204,7 +204,7 @@ module.exports = class mainDevice extends Homey.Device {
             const settings = this.getSettings();
             const deviceInfo = await this._controlMySpaClient.getSpa();
             const { currentState } = deviceInfo;
-            let { targetDesiredTemp, desiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online, tempRange } = currentState;
+            let { targetDesiredTemp, desiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online, tempRange, setupParams } = currentState;
 
             this.homey.app.log(`[Device] ${this.getName()} - deviceInfo =>`, currentState);
 
@@ -227,8 +227,22 @@ module.exports = class mainDevice extends Homey.Device {
 
             // ------------ Get values --------------
             const light = await this.getComponentValue('LIGHT', components);
-            const heater = heaterMode === 'READY';
-            const tempranges = tempRange === 'HIGH';
+            const heaterReady = (heaterMode === 'READY');
+            const tempRangeHigh = (tempRange === 'HIGH');
+            const tempRangeLow = (tempRange === 'LOW');
+            const runModeReady = (runMode === 'Ready');
+
+            if(tempRangeHigh) {
+                this.setCapabilityOptions('target_temperature', {
+                    "min":  toCelsius(setupParams.highRangeLow),
+                    "max": toCelsius(setupParams.highRangeHigh)
+                  })
+            } else if(tempRangeLow) {
+                this.setCapabilityOptions('target_temperature', {
+                    "min":  toCelsius(setupParams.lowRangeLow),
+                    "max": toCelsius(setupParams.lowRangeHigh)
+                  })
+            }
 
             if (pump0) {
                 const pump0_val = pump0.value === 'HIGH';
@@ -258,22 +272,16 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setValue('action_update_data', false, check);
             await this.setValue('locked', panelLock, check);
             await this.setValue('action_light_state', light, check);
-            await this.setValue('action_heater_mode', heater, check);
-            await this.setValue('action_temp_range', tempranges, check);
+            await this.setValue('action_heater_mode', heaterReady, check);
+            await this.setValue('action_temp_range', tempRangeHigh, check);
             await this.setValue('measure_temperature_range', tempRange, check);
             await this.setValue('measure_heater_mode', heaterMode, check);
             await this.setValue('measure_online', online, check);
-            await this.setValue('measure_runmode', runMode === 'Ready', check);
+            await this.setValue('measure_runmode', runModeReady, check);
 
-            if (settings.round_temp) {
-                if (currentTemp) await this.setValue('measure_temperature', Math.round(parseFloat(currentTemp)) > 40 ? 40 : Math.round(parseFloat(currentTemp)), check);
-                if (heater && targetDesiredTemp) await this.setValue('target_temperature', Math.round(parseFloat(targetDesiredTemp)) > 40 ? 40 : Math.round(parseFloat(targetDesiredTemp)), check);
-                if (!heater && desiredTemp) await this.setValue('target_temperature', Math.round(parseFloat(desiredTemp)) > 40 ? 40 : Math.round(parseFloat(desiredTemp)), check);
-            } else {
-                if (currentTemp) await this.setValue('measure_temperature', parseFloat(currentTemp) > 40 ? 40 : parseFloat(currentTemp), check);
-                if (tempranges && targetDesiredTemp) await this.setValue('target_temperature', parseFloat(targetDesiredTemp) > 40 ? 40 : parseFloat(targetDesiredTemp), check);
-                if (!tempranges && desiredTemp) await this.setValue('target_temperature', parseFloat(desiredTemp) > 40 ? 40 : parseFloat(desiredTemp), check);
-            }
+            if (currentTemp) await this.setValue('measure_temperature', parseFloat(currentTemp), check, 10, settings.round_temp);
+            if (tempRangeLow && targetDesiredTemp) await this.setValue('target_temperature', parseFloat(targetDesiredTemp), check, 10, settings.round_temp);
+            if (tempRangeHigh && desiredTemp) await this.setValue('target_temperature', parseFloat(desiredTemp), check, 10, settings.round_temp);
         } catch (error) {
             await this.setValue('measure_online', false);
             await this.resetControlMySpaClient();
@@ -294,20 +302,23 @@ module.exports = class mainDevice extends Homey.Device {
         return false;
     }
 
-    async setValue(key, value, firstRun = false, delay = 10) {
-        if (this.hasCapability(key)) {
-            const oldVal = await this.getCapabilityValue(key);
+    async setValue(key, value, firstRun = false, delay = 10, roundNumber = false) {
+        this.log(`[Device] ${this.getName()} - setValue => ${key} => `, value);
 
-            this.homey.app.log(`[Device] ${this.getName()} - setValue - oldValue => ${key} => `, oldVal, value);
+        if (this.hasCapability(key)) {
+            const newKey = key.replace('.', '_');
+            const oldVal = await this.getCapabilityValue(key);
+            const newVal = roundNumber ? Math.round(value) : value
+
+            this.homey.app.log(`[Device] ${this.getName()} - setValue - oldValue => ${key} => `, oldVal, newVal);
 
             if (delay) {
                 await sleep(delay);
             }
 
-            await this.setCapabilityValue(key, value);
+            await this.setCapabilityValue(key, newVal);
 
-            if (typeof value === 'boolean' && oldVal !== value && !firstRun) {
-                const newKey = key.replace('.', '_');
+            if (typeof newVal === 'boolean' && oldVal !== newVal && !firstRun) {
                 const triggers = this.homey.manifest.flow.triggers;
                 const triggerExists = triggers.find((trigger) => trigger.id === `${newKey}_changed`);
 
@@ -316,8 +327,10 @@ module.exports = class mainDevice extends Homey.Device {
                         .getDeviceTriggerCard(`${newKey}_changed`)
                         .trigger(this)
                         .catch(this.error)
-                        .then(this.homey.app.log(`[Device] ${this.getName()} - setValue ${newKey}_changed - Triggered: "${newKey} | ${value}"`));
+                        .then(this.homey.app.log(`[Device] ${this.getName()} - setValue ${newKey}_changed - Triggered: "${newKey} | ${newVal}"`));
                 }
+            } else if(oldVal !== newVal && !firstRun) {
+                this.homey.app.log(`[Device] ${this.getName()} - setValue ${newKey}_changed - Triggered: "${newKey} | ${newVal}"`)
             }
         }
     }

@@ -3,9 +3,7 @@
   "version": "1.6.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
-  "platforms": [
-    "local"
-  ],
+  "platforms": ["local"],
   "brandColor": "#000000",
   "name": {
     "en": "ControlMySpa",
@@ -30,9 +28,7 @@
       "temperature"
     ]
   },
-  "category": [
-    "appliances"
-  ],
+  "category": ["appliances"],
   "images": {
     "large": "/assets/images/large.jpg",
     "small": "/assets/images/small.jpg"
@@ -59,7 +55,7 @@
   },
   "contributing": {
     "donate": {
-"paypal": {
+      "paypal": {
         "username": "martijnpoppen"
       },
       "bunq": {
@@ -77,12 +73,8 @@
     {
       "id": "Balboa",
       "class": "other",
-      "connectivity": [
-        "cloud"
-      ],
-      "platforms": [
-        "local"
-      ],
+      "connectivity": ["cloud"],
+      "platforms": ["local"],
       "capabilities": [
         "locked",
         "target_temperature",
@@ -122,8 +114,9 @@
           }
         },
         "target_temperature": {
-          "min": 15.5,
-          "max": 40
+          "min": 26.5,
+          "max": 40,
+          "step": 0.5
         },
         "locked": {
           "title": {
@@ -424,9 +417,7 @@
             "filter": "driver_id=Balboa"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "condition_RUNMODE",
@@ -445,9 +436,7 @@
             "filter": "driver_id=Balboa"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "condition_LIGHT",
@@ -466,9 +455,7 @@
             "filter": "driver_id=Balboa"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "condition_HEATER",
@@ -487,9 +474,7 @@
             "filter": "driver_id=Balboa"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "condition_pump_state",
@@ -508,9 +493,7 @@
             "filter": "driver_id=Balboa&capabilities=action_pump_state"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "condition_pump_state_1",
@@ -529,9 +512,7 @@
             "filter": "driver_id=Balboa&capabilities=action_pump_state.1"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "condition_pump_state_2",
@@ -550,9 +531,7 @@
             "filter": "driver_id=Balboa&capabilities=action_pump_state.2"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "condition_blower_state",
@@ -571,9 +550,7 @@
             "filter": "driver_id=Balboa&capabilities=action_blower_state"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "condition_blower_state_1",
@@ -592,9 +569,7 @@
             "filter": "driver_id=Balboa&capabilities=action_blower_state.1"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "condition_blower_state_2",
@@ -613,9 +588,7 @@
             "filter": "driver_id=Balboa&capabilities=action_blower_state.2"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       }
     ],
     "actions": [
@@ -660,9 +633,7 @@
             ]
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "action_pump_state_flow_1",
@@ -705,9 +676,7 @@
             ]
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "action_pump_state_flow_2",
@@ -750,9 +719,7 @@
             ]
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "action_light_state_flow",
@@ -795,9 +762,7 @@
             ]
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "action_blower_state_flow",
@@ -840,9 +805,7 @@
             ]
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "action_blower_state_flow_1",
@@ -885,9 +848,7 @@
             ]
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "action_blower_state_flow_2",
@@ -930,9 +891,7 @@
             ]
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "action_temp_range_flow",
@@ -975,9 +934,7 @@
             ]
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "action_heater_mode_flow",
@@ -1000,9 +957,7 @@
             "filter": "driver_id=Balboa&capabilities=action_heater_mode"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       },
       {
         "id": "action_update_data_flow",
@@ -1025,9 +980,7 @@
             "filter": "driver_id=Balboa&capabilities=action_update_data"
           }
         ],
-        "platforms": [
-          "local"
-        ]
+        "platforms": ["local"]
       }
     ]
   },
