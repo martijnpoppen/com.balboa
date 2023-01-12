@@ -70,5 +70,8 @@
   },
   "1.6.1": {
     "en": "FIX: temperature issues | FIX: login error (pairing) | FIX: wrong button handler for tempRange"
+  },
+  "1.7.0": {
+    "en": "NEW: recover after API outage"
   }
 }
