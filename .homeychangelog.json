@@ -67,5 +67,8 @@
   },
   "1.6.0": {
     "en": "NEW: add trigger cards"
+  },
+  "1.6.1": {
+    "en": "FIX: temperature issues | FIX: login error (pairing) | FIX: wrong button handler for tempRange"
   }
 }
