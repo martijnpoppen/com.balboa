@@ -71,17 +71,17 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
-    async resetControlMySpaClient() {
-        this.setUnavailable(`Re-Connecting to ${this.getName()}`);
+    // async resetControlMySpaClient() {
+    //     this.setUnavailable(`Re-Connecting to ${this.getName()}`);
 
-        if (this.onPollInterval) {
-            this.clearIntervals();
-        }
+    //     if (this.onPollInterval) {
+    //         this.clearIntervals();
+    //     }
 
-        this._controlMySpaClient = undefined;
+    //     this._controlMySpaClient = undefined;
 
-        this.setControlMySpaClient()
-    }
+    //     this.setControlMySpaClient()
+    // }
 
     // ------------- CapabilityListeners -------------
     async setCapabilityListeners() {
@@ -296,14 +296,12 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setValue('measure_runmode', runModeReady, check);
 
             if (currentTemp) await this.setValue('measure_temperature', toCelsius(currentTemp), check, 10, settings.round_temp);
-            if (desiredTemp) await this.setValue('target_temperature', toCelsius(targetDesiredTemp), check, 10, settings.round_temp);
+            if (desiredTemp) await this.setValue('target_temperature', toCelsius(desiredTemp), check, 10, settings.round_temp);
             // if ((targetDesiredTemp === setupParams.highRangeHigh || targetDesiredtemp === setupParams.lowRangeHigh) && desiredTemp) {
             //     await this.setValue('target_temperature', toCelsius(desiredTemp), check, 10, settings.round_temp);
             //     await this.onCapability_TEMPERATURE(toCelsius(desiredTemp));
             // }
         } catch (error) {
-            await this.setValue('measure_online', false);
-            await this.resetControlMySpaClient();
             this.homey.app.error(error);
         }
     }
