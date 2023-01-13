@@ -1,12 +1,12 @@
 const Homey = require('homey');
 const ControlMySpa = require('../lib/balboa');
-const { sleep, decrypt, encrypt, toCelsius } = require('../lib/helpers');
+const { sleep, decrypt, encrypt, toCelsius, toFahrenheit } = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
         try {
             this.homey.app.log('[Device] - init =>', this.getName());
-            this.setUnavailable(`Initializing ${this.getName()}`);
+            this.setUnavailable(`Connecting to ${this.getName()}`);
 
             await this.checkCapabilities();
             await this.setControlMySpaClient();
@@ -63,7 +63,7 @@ module.exports = class mainDevice extends Homey.Device {
 
             await this._controlMySpaClient.deviceInit();
 
-            await this.setCapabilityValues(true);
+            await this.setCapabilityValues(null, true);
             await this.setAvailable();
             await this.setIntervalsAndFlows(settings);
         } catch (error) {
@@ -72,7 +72,15 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     async resetControlMySpaClient() {
-        await this._controlMySpaClient.deviceInit();
+        this.setUnavailable(`Re-Connecting to ${this.getName()}`);
+
+        if (this.onPollInterval) {
+            this.clearIntervals();
+        }
+
+        this._controlMySpaClient = undefined;
+
+        this.setControlMySpaClient()
     }
 
     // ------------- CapabilityListeners -------------
@@ -100,7 +108,11 @@ module.exports = class mainDevice extends Homey.Device {
         try {
             this.homey.app.log(`[Device] ${this.getName()} - onCapability_TEMPERATURE`, value);
 
-            await this._controlMySpaClient.setTemp(value);
+            const data = await this._controlMySpaClient.setTemp(toFahrenheit(value));
+
+            if(data) {
+                await this.setCapabilityValues(data);
+            }
 
             return Promise.resolve(true);
         } catch (e) {
@@ -129,51 +141,55 @@ module.exports = class mainDevice extends Homey.Device {
     async onCapability_ACTION(value) {
         try {
             this.homey.app.log(`[Device] ${this.getName()} - onCapability_ACTION`, value);
+            
+            let data = null;
 
             if ('action_blower_state' in value) {
                 const valueString = value.action_blower_state ? 'HIGH' : 'OFF';
-                await this._controlMySpaClient.setBlowerState(0, valueString);
+                data = await this._controlMySpaClient.setBlowerState(0, valueString);
             }
 
             if ('action_blower_state.1' in value) {
                 const valueString = value['action_blower_state.1'] ? 'HIGH' : 'OFF';
-                await this._controlMySpaClient.setBlowerState(1, valueString);
+                data = await this._controlMySpaClient.setBlowerState(1, valueString);
             }
 
             if ('action_blower_state.2' in value) {
                 const valueString = value['action_blower_state.2'] ? 'HIGH' : 'OFF';
-                await this._controlMySpaClient.setBlowerState(2, valueString);
+                data = await this._controlMySpaClient.setBlowerState(2, valueString);
             }
 
             if ('action_light_state' in value) {
                 const valueString = value.action_light_state ? 'HIGH' : 'OFF';
-                await this._controlMySpaClient.setLightState(0, valueString);
+                data = await this._controlMySpaClient.setLightState(0, valueString);
             }
 
             if ('action_pump_state' in value) {
                 const valueString = value.action_pump_state ? 'HIGH' : 'OFF';
-                await this._controlMySpaClient.setJetState(0, valueString);
+                data = await this._controlMySpaClient.setJetState(0, valueString);
             }
 
             if ('action_pump_state.1' in value) {
                 const valueString = value['action_pump_state.1'] ? 'HIGH' : 'OFF';
-                await this._controlMySpaClient.setJetState(1, valueString);
+                data = await this._controlMySpaClient.setJetState(1, valueString);
             }
 
             if ('action_pump_state.2' in value) {
                 const valueString = value['action_pump_state.2'] ? 'HIGH' : 'OFF';
-                await this._controlMySpaClient.setJetState(2, valueString);
+                data = await this._controlMySpaClient.setJetState(2, valueString);
             }
 
             if ('action_heater_mode' in value) {
-                await this._controlMySpaClient.toggleHeaterMode();
+                data = await this._controlMySpaClient.toggleHeaterMode();
             }
 
             if ('action_temp_range' in value) {
-                await this._controlMySpaClient.setTempRange(value.action_temp_range);
+                data = await this._controlMySpaClient.setTempRange(value.action_temp_range);
             }
 
-            await this.setCapabilityValues();
+            if(data) {
+                await this.setCapabilityValues(data);
+            }
 
             return Promise.resolve(true);
         } catch (e) {
@@ -197,14 +213,14 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
-    async setCapabilityValues(check = false) {
+    async setCapabilityValues(deviceInfoOverride = null, check = false) {
         this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues`);
 
         try {
             const settings = this.getSettings();
-            const deviceInfo = await this._controlMySpaClient.getSpa();
+            const deviceInfo = deviceInfoOverride ? deviceInfoOverride : await this._controlMySpaClient.getSpa();
             const { currentState } = deviceInfo;
-            let { targetDesiredTemp, desiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online, tempRange, setupParams } = currentState;
+            let { desiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online, tempRange, setupParams } = currentState;
 
             this.homey.app.log(`[Device] ${this.getName()} - deviceInfo =>`, currentState);
 
@@ -279,9 +295,12 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setValue('measure_online', online, check);
             await this.setValue('measure_runmode', runModeReady, check);
 
-            if (currentTemp) await this.setValue('measure_temperature', parseFloat(currentTemp), check, 10, settings.round_temp);
-            if (tempRangeLow && targetDesiredTemp) await this.setValue('target_temperature', parseFloat(targetDesiredTemp), check, 10, settings.round_temp);
-            if (tempRangeHigh && desiredTemp) await this.setValue('target_temperature', parseFloat(desiredTemp), check, 10, settings.round_temp);
+            if (currentTemp) await this.setValue('measure_temperature', toCelsius(currentTemp), check, 10, settings.round_temp);
+            if (desiredTemp) await this.setValue('target_temperature', toCelsius(targetDesiredTemp), check, 10, settings.round_temp);
+            // if ((targetDesiredTemp === setupParams.highRangeHigh || targetDesiredtemp === setupParams.lowRangeHigh) && desiredTemp) {
+            //     await this.setValue('target_temperature', toCelsius(desiredTemp), check, 10, settings.round_temp);
+            //     await this.onCapability_TEMPERATURE(toCelsius(desiredTemp));
+            // }
         } catch (error) {
             await this.setValue('measure_online', false);
             await this.resetControlMySpaClient();
@@ -303,7 +322,7 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     async setValue(key, value, firstRun = false, delay = 10, roundNumber = false) {
-        this.log(`[Device] ${this.getName()} - setValue => ${key} => `, value);
+        this.homey.app.log(`[Device] ${this.getName()} - setValue => ${key} => `, value);
 
         if (this.hasCapability(key)) {
             const newKey = key.replace('.', '_');

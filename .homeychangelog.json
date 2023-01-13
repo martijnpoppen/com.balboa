@@ -73,5 +73,8 @@
   },
   "1.7.0": {
     "en": "NEW: recover after API outage"
+  },
+  "1.7.1": {
+    "en": "FIX: temperature | OPT: update library | NEW: use response data"
   }
 }
