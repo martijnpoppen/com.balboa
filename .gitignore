@@ -95,6 +95,11 @@ typings/
 
 build/
 
-
 # Added by Homey CLI
 /.homeybuild/
+
+# VScode
+.vscode/
+
+# snyk
+.dccache

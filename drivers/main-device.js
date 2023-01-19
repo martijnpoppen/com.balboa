@@ -323,7 +323,7 @@ module.exports = class mainDevice extends Homey.Device {
         this.homey.app.log(`[Device] ${this.getName()} - setValue => ${key} => `, value);
 
         if (this.hasCapability(key)) {
-            const newKey = key.replace('.', '_');
+            const newKey = key.replace(/\./g, '_');
             const oldVal = await this.getCapabilityValue(key);
             const newVal = roundNumber ? Math.round(value) : value
 
