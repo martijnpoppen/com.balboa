@@ -220,7 +220,7 @@ module.exports = class mainDevice extends Homey.Device {
             const settings = this.getSettings();
             const deviceInfo = deviceInfoOverride ? deviceInfoOverride : await this._controlMySpaClient.getSpa();
             const { currentState } = deviceInfo;
-            let { desiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online, tempRange, setupParams } = currentState;
+            let { desiredTemp, targetDesiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online, tempRange, setupParams } = currentState;
 
             this.homey.app.log(`[Device] ${this.getName()} - deviceInfo =>`, currentState);
 
@@ -296,11 +296,16 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setValue('measure_runmode', runModeReady, check);
 
             if (currentTemp) await this.setValue('measure_temperature', toCelsius(currentTemp), check, 10, settings.round_temp);
-            if (desiredTemp) await this.setValue('target_temperature', toCelsius(desiredTemp), check, 10, settings.round_temp);
-            // if ((targetDesiredTemp === setupParams.highRangeHigh || targetDesiredtemp === setupParams.lowRangeHigh) && desiredTemp) {
-            //     await this.setValue('target_temperature', toCelsius(desiredTemp), check, 10, settings.round_temp);
-            //     await this.onCapability_TEMPERATURE(toCelsius(desiredTemp));
-            // }
+
+            targetDesiredTemp = parseFloat(targetDesiredTemp);
+
+            // Use desiredTemp if targetDesiredTemp is out of range, targetDesiredTemp is the preferred value to use.
+            if ((targetDesiredTemp === setupParams.highRangeHigh || targetDesiredTemp == setupParams.lowRangeLow) && desiredTemp) {
+                await this.setValue('target_temperature', toCelsius(desiredTemp), check, 10, settings.round_temp);
+                await this.onCapability_TEMPERATURE(toCelsius(desiredTemp));
+            } else {
+                await this.setValue('target_temperature', toCelsius(targetDesiredTemp), check, 10, settings.round_temp);
+            }
         } catch (error) {
             this.homey.app.error(error);
         }
