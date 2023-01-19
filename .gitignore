@@ -97,6 +97,7 @@ build/
 
 # Added by Homey CLI
 /.homeybuild/
+package-lock.json
 
 # VScode
 .vscode/
