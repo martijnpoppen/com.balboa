@@ -1,0 +1,44 @@
+{
+  "title": {
+    "en": "Turn light on or off",
+    "nl": "Zet lamp aan of uit"
+  },
+  "titleFormatted": {
+    "en": "Turn Light [[action_on_off]]",
+    "nl": "Zet Lamp [[action_on_off]]"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "placeholder": {
+        "en": "Select device",
+        "nl": "Selecteer apparaat"
+      },
+      "filter": "driver_id=Balboa&capabilities=action_light_state"
+    },
+    {
+      "name": "action_on_off",
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "1",
+          "label": {
+            "en": "On",
+            "nl": "Aan"
+          }
+        },
+        {
+          "id": "0",
+          "label": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        }
+      ]
+    }
+  ],
+  "platforms": [
+    "local"
+  ]
+}

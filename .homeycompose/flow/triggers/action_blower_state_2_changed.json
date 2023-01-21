@@ -1,0 +1,13 @@
+{
+  "title": {
+    "en": "Blower State 3 changed",
+    "nl": "Blazer Status 3 veranderd"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Balboa"
+    }
+  ]
+}

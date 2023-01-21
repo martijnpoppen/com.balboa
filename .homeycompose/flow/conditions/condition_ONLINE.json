@@ -1,0 +1,20 @@
+{
+  "title": {
+    "en": "is online",
+    "nl": "is online"
+  },
+  "titleFormatted": {
+    "en": "!{{is|isn't}} online",
+    "nl": "!{{is|is niet}} online"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Balboa"
+    }
+  ],
+  "platforms": [
+    "local"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "title": {
+    "en": "Temperature range changed",
+    "nl": "Temperatuur bereik veranderd"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Balboa"
+    }
+  ]
+}

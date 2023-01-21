@@ -1,0 +1,27 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Temperature range",
+    "nl": "Temperatuur bereik"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "assets/icons/temp.svg",
+  "values": [
+    {
+      "id": "LOW",
+      "title": {
+        "en": "LOW",
+        "nl": "LOW"
+      }
+    },
+    {
+      "id": "HIGH",
+      "title": {
+        "en": "HIGH",
+        "nl": "HIGH"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "title": {
+    "en": "Light is on",
+    "nl": "Licht is aan"
+  },
+  "titleFormatted": {
+    "en": "Light is !{{on|off}}",
+    "nl": "Licht is !{{aan|uit}}"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Balboa"
+    }
+  ],
+  "platforms": [
+    "local"
+  ]
+}

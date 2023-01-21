@@ -1,0 +1,20 @@
+{
+  "title": {
+    "en": "Blower 1 is on",
+    "nl": "Blazer 1 is aan"
+  },
+  "titleFormatted": {
+    "en": "Blower 1 is !{{on|off}}",
+    "nl": "Blazer 1 is !{{aan|uit}}"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Balboa&capabilities=action_blower_state"
+    }
+  ],
+  "platforms": [
+    "local"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "title": {
+    "en": "Is ready state has changed",
+    "nl": "Is beschikbaar status is veranderd"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Balboa"
+    }
+  ]
+}

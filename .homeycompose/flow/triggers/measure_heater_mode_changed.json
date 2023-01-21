@@ -1,0 +1,13 @@
+{
+  "title": {
+    "en": "Heater has changed",
+    "nl": "Verwarming is veranderd"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Balboa"
+    }
+  ]
+}
