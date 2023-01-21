@@ -106,7 +106,7 @@ module.exports = class mainDevice extends Homey.Device {
 
     async onCapability_TEMPERATURE(value) {
         try {
-            this.homey.app.log(`[Device] ${this.getName()} - onCapability_TEMPERATURE`, value);
+            this.homey.app.log(`[Device] ${this.getName()} - onCapability_TEMPERATURE`, toFahrenheit(value) + 0.4);
 
             // Send requested temperature to the spa in Fahrenheit + 0.4 degrees.
             // This is how the Balboa ControlMySpa mobile app does it.
@@ -218,7 +218,7 @@ module.exports = class mainDevice extends Homey.Device {
             const settings = this.getSettings();
             const deviceInfo = deviceInfoOverride ? deviceInfoOverride : await this._controlMySpaClient.getSpa();
             const { currentState } = deviceInfo;
-            let { desiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online, tempRange, setupParams } = currentState;
+            let { desiredTemp, targetDesiredTemp, currentTemp, panelLock, heaterMode, components, runMode, online, tempRange, setupParams } = currentState;
 
             this.homey.app.log(`[Device] ${this.getName()} - deviceInfo =>`, currentState);
 
@@ -294,11 +294,17 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setValue('measure_runmode', runModeReady, check);
 
             if (currentTemp) await this.setValue('measure_temperature', toCelsius(currentTemp), check, 10, settings.round_temp);
-            if (desiredTemp) await this.setValue('target_temperature', toCelsius(desiredTemp), check, 10, settings.round_temp);
-            // if ((targetDesiredTemp === setupParams.highRangeHigh || targetDesiredtemp === setupParams.lowRangeHigh) && desiredTemp) {
-            //     await this.setValue('target_temperature', toCelsius(desiredTemp), check, 10, settings.round_temp);
-            //     await this.onCapability_TEMPERATURE(toCelsius(desiredTemp));
-            // }
+            // If desiredTemp is available, compare it to targetDesiredTemp. There should be 0.4 difference for valid value.
+            // Use also desiredTemp when targetDesiredTemp is at highRangeHigh or lowRangeLow, when tempRange was changed.
+            // Fallback to targetDesiredTemp and helps desireTemp is not available or update is delayed in the device API.
+            // Values neet to be Number for the strict comparison.
+            targetDesiredTemp = Number(targetDesiredTemp);
+            desiredTemp = Number(desiredTemp);
+            if (desiredTemp && ((targetDesiredTemp === desiredTemp + 0.4) || targetDesiredTemp === setupParams.highRangeHigh || targetDesiredTemp == setupParams.lowRangeLow)) {
+                await this.setValue('target_temperature', toCelsius(desiredTemp), check, 10, settings.round_temp);
+            } else {
+              await this.setValue('target_temperature', toCelsius(targetDesiredTemp - 0.4), check, 10, settings.round_temp);
+            }
         } catch (error) {
             this.homey.app.error(error);
         }
