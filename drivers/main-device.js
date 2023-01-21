@@ -106,7 +106,7 @@ module.exports = class mainDevice extends Homey.Device {
 
     async onCapability_TEMPERATURE(value) {
         try {
-            this.homey.app.log(`[Device] ${this.getName()} - onCapability_TEMPERATURE`, toFahrenheit(value) + 0.4);
+            this.homey.app.log(`[Device] ${this.getName()} - onCapability_TEMPERATURE ${value}C ${toFahrenheit(value)}F`);
 
             // Send requested temperature to the spa in Fahrenheit + 0.4 degrees.
             // This is how the Balboa ControlMySpa mobile app does it.
