@@ -99,6 +99,8 @@ build/
 # Added by Homey CLI
 /.homeybuild/
 /package-lock.json
+# Converted to homey compose, app.json is no need to be tracked
+/app.json
 
 # Snyk cash
 .dccache
