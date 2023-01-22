@@ -82,5 +82,8 @@
   },
   "1.7.3": {
     "en": "FIX: unknown var"
+  },
+  "1.8.0": {
+    "en": "NEW: temperature fixes (@OH2TH)"
   }
 }
