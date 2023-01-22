@@ -1,0 +1,10 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Update manual",
+    "nl": "Handmatig updaten"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Light State",
+    "nl": "Light Status"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

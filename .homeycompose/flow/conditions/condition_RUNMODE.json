@@ -1,0 +1,20 @@
+{
+  "title": {
+    "en": "Is ready",
+    "nl": "Is beschikbaar"
+  },
+  "titleFormatted": {
+    "en": "!{{is|isn't}} ready",
+    "nl": "!{{is|is niet}} beschikbaar"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Balboa"
+    }
+  ],
+  "platforms": [
+    "local"
+  ]
+}

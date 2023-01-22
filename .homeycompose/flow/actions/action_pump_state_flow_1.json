@@ -1,0 +1,44 @@
+{
+  "title": {
+    "en": "Turn Pump 2 on or off",
+    "nl": "Zet Pomp 2 aan of uit"
+  },
+  "titleFormatted": {
+    "en": "Set Pump 2 [[action_on_off]]",
+    "nl": "Zet Pomp 2 [[action_on_off]]"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "placeholder": {
+        "en": "Select device",
+        "nl": "Selecteer apparaat"
+      },
+      "filter": "driver_id=Balboa&capabilities=action_pump_state.1"
+    },
+    {
+      "name": "action_on_off",
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "1",
+          "label": {
+            "en": "On",
+            "nl": "Aan"
+          }
+        },
+        {
+          "id": "0",
+          "label": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        }
+      ]
+    }
+  ],
+  "platforms": [
+    "local"
+  ]
+}

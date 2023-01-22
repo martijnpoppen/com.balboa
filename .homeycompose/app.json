@@ -1,0 +1,79 @@
+{
+  "id": "com.balboa",
+  "version": "1.7.3",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "brandColor": "#000000",
+  "name": {
+    "en": "ControlMySpa",
+    "nl": "ControlMySpa"
+  },
+  "description": {
+    "en": "Stay connected to your spa from anywhere",
+    "nl": "Blijf in verbinding met je spa"
+  },
+  "tags": {
+    "en": [
+      "spa",
+      "hot tub",
+      "jacuzzi",
+      "balboa",
+      "water",
+      "heating",
+      "bubbles",
+      "jet",
+      "blower",
+      "lights",
+      "temperature"
+    ]
+  },
+  "category": [
+    "appliances"
+  ],
+  "images": {
+    "large": "/assets/images/large.jpg",
+    "small": "/assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Martijn Poppen",
+    "email": "controlmyspa@martijnpoppen.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Martijn Poppen",
+        "email": "controlmyspa@martijnpoppen.nl"
+      },
+      {
+        "name": "Tapio Heiskanen"
+      }
+    ],
+    "translators": [
+      {
+        "name": "🇬🇧 Martijn Poppen"
+      },
+      {
+        "name": "🇳🇱 Martijn Poppen"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "martijnpoppen"
+      },
+      "bunq": {
+        "username": "martijnpoppen"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://community.homey.app/t/app-pro-controlmyspa/57870"
+  },
+  "source": "https://github.com/martijnpoppen/com.balboa",
+  "homeyCommunityTopicId": 57870,
+  "support": "https://community.homey.app/t/app-pro-controlmyspa/57870"
+}

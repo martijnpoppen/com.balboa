@@ -1,0 +1,27 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Heater",
+    "nl": "Verwarming"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "assets/icons/heat.svg",
+  "values": [
+    {
+      "id": "READY",
+      "title": {
+        "en": "Ready",
+        "nl": "Ready"
+      }
+    },
+    {
+      "id": "REST",
+      "title": {
+        "en": "Rest",
+        "nl": "Rest"
+      }
+    }
+  ]
+}

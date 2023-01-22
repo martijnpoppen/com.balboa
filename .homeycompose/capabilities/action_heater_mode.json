@@ -1,0 +1,10 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Heater",
+    "nl": "Verwarming"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

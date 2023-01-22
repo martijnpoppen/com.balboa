@@ -1,0 +1,24 @@
+{
+  "title": {
+    "en": "Toggle Heater on or off",
+    "nl": "Schakel verwarming aan of uit"
+  },
+  "titleFormatted": {
+    "en": "Toggle Heater on or off",
+    "nl": "Schakel verwarming aan of uit"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "placeholder": {
+        "en": "Select device",
+        "nl": "Selecteer apparaat"
+      },
+      "filter": "driver_id=Balboa&capabilities=action_heater_mode"
+    }
+  ],
+  "platforms": [
+    "local"
+  ]
+}

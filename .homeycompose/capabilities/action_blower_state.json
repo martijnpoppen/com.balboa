@@ -1,0 +1,10 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Blower State 1",
+    "nl": "Blazer Status 1"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

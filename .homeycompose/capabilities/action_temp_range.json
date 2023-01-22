@@ -1,0 +1,10 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Temperature range",
+    "nl": "Temperatuur bereik"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

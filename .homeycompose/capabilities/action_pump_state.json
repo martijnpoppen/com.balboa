@@ -1,0 +1,10 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Pump State 1",
+    "nl": "Pomp Status 1"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

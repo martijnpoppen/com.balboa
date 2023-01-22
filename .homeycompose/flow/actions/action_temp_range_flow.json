@@ -1,0 +1,44 @@
+{
+  "title": {
+    "en": "Set temperature mode",
+    "nl": "Zet temperatuur modus"
+  },
+  "titleFormatted": {
+    "en": "Set temperature mode [[action_temp_range]]",
+    "nl": "Zet temperatuur modus [[action_temp_range]]"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "placeholder": {
+        "en": "Select device",
+        "nl": "Selecteer apparaat"
+      },
+      "filter": "driver_id=Balboa&capabilities=action_temp_range"
+    },
+    {
+      "name": "action_temp_range",
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "1",
+          "label": {
+            "en": "High",
+            "nl": "Hoog"
+          }
+        },
+        {
+          "id": "0",
+          "label": {
+            "en": "Low",
+            "nl": "Laag"
+          }
+        }
+      ]
+    }
+  ],
+  "platforms": [
+    "local"
+  ]
+}

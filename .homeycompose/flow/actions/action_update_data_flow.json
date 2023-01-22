@@ -1,0 +1,24 @@
+{
+  "title": {
+    "en": "Manual update",
+    "nl": "Handmatig updaten"
+  },
+  "titleFormatted": {
+    "en": "Manual update",
+    "nl": "Handmatig updaten"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "placeholder": {
+        "en": "Select device",
+        "nl": "Selecteer apparaat"
+      },
+      "filter": "driver_id=Balboa&capabilities=action_update_data"
+    }
+  ],
+  "platforms": [
+    "local"
+  ]
+}

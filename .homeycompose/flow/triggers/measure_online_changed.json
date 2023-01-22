@@ -1,0 +1,13 @@
+{
+  "title": {
+    "en": "Online state has changed",
+    "nl": "Online status is veranderd"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Balboa"
+    }
+  ]
+}

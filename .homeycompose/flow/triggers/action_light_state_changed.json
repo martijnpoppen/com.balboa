@@ -1,0 +1,13 @@
+{
+  "title": {
+    "en": "Light State changed",
+    "nl": "Lamp Status veranderd"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Balboa"
+    }
+  ]
+}
