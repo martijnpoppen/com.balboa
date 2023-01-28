@@ -12,6 +12,8 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setControlMySpaClient();
             await this.setCapabilityListeners();
 
+            this.homey.settings.unset('24h_clock');
+
             await this.setAvailable();
         } catch (error) {
             this.homey.app.log(`[Device] ${this.getName()} - OnInit Error`, error);
@@ -351,9 +353,24 @@ module.exports = class mainDevice extends Homey.Device {
                         .then(this.homey.app.log(`[Device] ${this.getName()} - setValue ${newKey}_changed - Triggered: "${newKey} | ${newVal}"`));
                 }
             } else if(oldVal !== newVal && !firstRun) {
-                this.homey.app.log(`[Device] ${this.getName()} - setValue ${newKey}_changed - Triggered: "${newKey} | ${newVal}"`)
+                this.homey.app.log(`[Device] ${this.getName()} - setValue ${newKey}_changed - Triggered: "${newKey} | ${newVal}"`);
             }
         }
+    }
+
+    async setClock() {
+        const settings = this.getSettings();
+        const myTZ = this.homey.clock.getTimezone();
+        const timeNow = new Date();
+        // Format date and time to match api
+        const localTime = timeNow.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: myTZ });
+        let localDate = timeNow.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: myTZ });
+
+        this.homey.app.log(`[Device] ${this.getName()} - setClock ${localDate} ${localTime} ${myTZ}`);
+
+        // Escape slashes in date before sending to api
+        localDate = localDate.replace(/\//g, '\\/');
+        await this._controlMySpaClient.setTime(localDate, localTime, settings.clock_24);
     }
 
     // ------------- Intervals -------------
@@ -361,6 +378,7 @@ module.exports = class mainDevice extends Homey.Device {
         try {
             if (this.getAvailable()) {
                 await this.setCapabilityValuesInterval(settings.update_interval);
+                if(settings.clock_sync) await this.setClockSyncInterval(settings.clock_sync_interval);
             }
         } catch (error) {
             this.homey.app.log(`[Device] ${this.getName()} - OnInit Error`, error);
@@ -379,9 +397,25 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
+    async setClockSyncInterval(clock_sync_interval) {
+        try {
+            const REFRESH_INTERVAL = 60 * 1000 * clock_sync_interval;
+
+            this.homey.app.log(`[Device] ${this.getName()} - clock_sync_interval =>`, REFRESH_INTERVAL, clock_sync_interval);
+            this.clock_sync_interval = setInterval(this.setClock.bind(this), REFRESH_INTERVAL);
+        } catch (error) {
+            this.setUnavailable(error);
+            this.homey.app.log(error);
+        }
+    }
+
     async clearIntervals() {
         this.homey.app.log(`[Device] ${this.getName()} - clearIntervals`);
         await clearInterval(this.onPollInterval);
+        if (typeof this.clock_sync_interval !== 'undefined') {
+            await clearInterval(this.clock_sync_interval);
+            this.clock_sync_interval = null;
+        }
     }
 
     // ------------- Capabilities -------------

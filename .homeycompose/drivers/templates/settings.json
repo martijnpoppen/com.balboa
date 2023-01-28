@@ -59,6 +59,48 @@
           "value": ""
         }
       ]
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "Spa clock settings",
+        "nl": "Spa klok instellingen"
+      },
+      "children": [
+        {
+          "id": "clock_sync",
+          "type": "checkbox",
+          "label": {
+            "en": "Synchronize with Homey",
+            "nl": "Synchroniseren met Homey"
+          },
+          "value": true
+        },
+        {
+          "id": "clock_24",
+          "type": "checkbox",
+          "label": {
+            "en": "Set 24h clock",
+            "nl": "24-uurs klok"
+          },
+          "value": true
+        },
+        {
+          "id": "clock_sync_interval",
+          "type": "number",
+          "label": {
+            "en": "Synchronize every (hours)",
+            "nl": "Synchroniseer elke (uur)"
+          },
+          "min": 1,
+          "max": 24,
+          "units": {
+            "en": "hours",
+            "nl": "uur"
+          },
+          "value": 1
+        }
+      ]
     }
   ]
 }
