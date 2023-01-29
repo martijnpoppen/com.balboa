@@ -68,20 +68,15 @@
       },
       "children": [
         {
-          "id": "clock_sync",
-          "type": "checkbox",
-          "label": {
-            "en": "Synchronize with Homey",
-            "nl": "Synchroniseren met Homey"
-          },
-          "value": true
-        },
-        {
           "id": "clock_24",
           "type": "checkbox",
           "label": {
-            "en": "Set 24h clock",
+            "en": "24h clock",
             "nl": "24-uurs klok"
+          },
+          "hint":{
+            "en": "If enabled, the spa clock will be set to 24h format, otherwise 12h format.",
+            "nl": "Indien ingeschakeld, zal de spa klok ingesteld worden op 24-uurs formaat, anders 12-uurs formaat."
           },
           "value": true
         },
@@ -92,13 +87,17 @@
             "en": "Synchronize every (hours)",
             "nl": "Synchroniseer elke (uur)"
           },
-          "min": 1,
+          "hint": {
+            "en": "The clock will be synchronized at the next update interval. Set to 0 to disable. Every 24 hours is recommended.",
+            "nl": "De klok zal gesynchroniseerd worden bij de volgende update interval. Zet op 0 om uit te schakelen. Elke 24 uur wordt aangeraden."
+          },
+          "min": 0,
           "max": 24,
           "units": {
             "en": "hours",
             "nl": "uur"
           },
-          "value": 1
+          "value": 0
         }
       ]
     }

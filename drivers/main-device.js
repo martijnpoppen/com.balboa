@@ -12,8 +12,6 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setControlMySpaClient();
             await this.setCapabilityListeners();
 
-            this.homey.settings.unset('24h_clock');
-
             await this.setAvailable();
         } catch (error) {
             this.homey.app.log(`[Device] ${this.getName()} - OnInit Error`, error);
@@ -358,18 +356,18 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
+    /**
+     * @description Evaluate current date and time in local time zone to a format the CMS API can handle and call the api setTime()
+     */
     async setClock() {
         const settings = this.getSettings();
         const myTZ = this.homey.clock.getTimezone();
         const timeNow = new Date();
-        // Format date and time to match api
         const localTime = timeNow.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: myTZ });
         let localDate = timeNow.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: myTZ });
 
-        this.homey.app.log(`[Device] ${this.getName()} - setClock ${localDate} ${localTime} ${myTZ}`);
+        this.homey.app.log(`[Device] ${this.getName()} - setClock ${localDate} ${localTime} ${myTZ} clock_24=${settings.clock_24}`);
 
-        // Escape slashes in date before sending to api
-        localDate = localDate.replace(/\//g, '\\/');
         await this._controlMySpaClient.setTime(localDate, localTime, settings.clock_24);
     }
 
@@ -378,7 +376,8 @@ module.exports = class mainDevice extends Homey.Device {
         try {
             if (this.getAvailable()) {
                 await this.setCapabilityValuesInterval(settings.update_interval);
-                if(settings.clock_sync) await this.setClockSyncInterval(settings.clock_sync_interval);
+                // Clock sync is disable if clock_sync_interval = 0
+                if(settings.clock_sync_interval !== 0) await this.setClockSyncInterval(settings.clock_sync_interval);
             }
         } catch (error) {
             this.homey.app.log(`[Device] ${this.getName()} - OnInit Error`, error);
@@ -397,12 +396,18 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
+    /**
+     * @description Set the interval in hours for setClock()
+     * 
+     * @param {Number} clock_sync_interval Interval in hours
+     */
     async setClockSyncInterval(clock_sync_interval) {
         try {
-            const REFRESH_INTERVAL = 60 * 1000 * clock_sync_interval;
+            // Convert hours to milliseconds for hourly interval
+            const REFRESH_INTERVAL = 60 * 60 * 1000 * clock_sync_interval;
 
             this.homey.app.log(`[Device] ${this.getName()} - clock_sync_interval =>`, REFRESH_INTERVAL, clock_sync_interval);
-            this.clock_sync_interval = setInterval(this.setClock.bind(this), REFRESH_INTERVAL);
+            this.onClockSyncInterval = setInterval(this.setClock.bind(this), REFRESH_INTERVAL);
         } catch (error) {
             this.setUnavailable(error);
             this.homey.app.log(error);
@@ -412,9 +417,10 @@ module.exports = class mainDevice extends Homey.Device {
     async clearIntervals() {
         this.homey.app.log(`[Device] ${this.getName()} - clearIntervals`);
         await clearInterval(this.onPollInterval);
-        if (typeof this.clock_sync_interval !== 'undefined') {
-            await clearInterval(this.clock_sync_interval);
-            this.clock_sync_interval = null;
+        // Clear onClockSyncInterval if it was started.
+        if (typeof this.onClockSyncInterval !== 'undefined') {
+            await clearInterval(this.onClockSyncInterval);
+            this.onClockSyncInterval = null;
         }
     }
 
