@@ -307,6 +307,7 @@ module.exports = class mainDevice extends Homey.Device {
             }
 
             // Set Spa clock if deviceInfo.timeNotSet or spa clock's hour or minute is off from Homey clock by more the 5 minutes.
+            // Also set when clock_24 setting is changed and clock_sync is enabled.
             const timeNow = new Date();
             const myTZ = this.homey.clock.getTimezone();
             const myTime = timeNow.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: myTZ });
@@ -314,8 +315,7 @@ module.exports = class mainDevice extends Homey.Device {
             const myTimeMinutes = Number(myTime.split(':')[0]) * 60 + Number(myTime.split(':')[1]);
             const spaTimeMinutes = (hour * 60) + minute;
 
-            if((settings.clock_sync && timeNotSet ) || (settings.clock_sync && (Math.abs(spaTimeMinutes - myTimeMinutes) > 5))) {
-                this.homey.app.log(`[Device] ${this.getName()} - Spa clock clock_24=${military} is off more than 5 minutes ${spaTimeMinutes} - ${myTimeMinutes}.`);
+            if ((settings.clock_sync && timeNotSet) || (settings.clock_sync && military !== settings.clock_24) || (settings.clock_sync && (Math.abs(spaTimeMinutes - myTimeMinutes) > 5))) {
                 this.homey.app.log(`[Device] ${this.getName()} - setClock ${myDate} ${myTime} ${myTZ} clock_24=${settings.clock_24}`);
                 await this._controlMySpaClient.setTime(myDate, myTime, settings.clock_24);
             } else {
