@@ -81,23 +81,17 @@
           "value": true
         },
         {
-          "id": "clock_sync_interval",
-          "type": "number",
+          "id": "clock_sync",
+          "type": "checkbox",
           "label": {
-            "en": "Synchronize every (hours)",
-            "nl": "Synchroniseer elke (uur)"
+            "en": "Synchronize spa clock",
+            "nl": "Synchroniseer spa klok"
           },
           "hint": {
-            "en": "The clock will be synchronized at the next update interval. Set to 0 to disable. Every 24 hours is recommended.",
-            "nl": "De klok zal gesynchroniseerd worden bij de volgende update interval. Zet op 0 om uit te schakelen. Elke 24 uur wordt aangeraden."
+            "en": "If enabled, the spa clock will be synchronized with Homey's local time when needed.",
+            "nl": "Indien ingeschakeld, zal de spa klok gesynchroniseerd worden met de lokale tijd van Homey wanneer nodig."
           },
-          "min": 0,
-          "max": 24,
-          "units": {
-            "en": "hours",
-            "nl": "uur"
-          },
-          "value": 0
+          "value": false
         }
       ]
     }
